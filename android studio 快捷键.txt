@@ -1,0 +1,102 @@
+Android快捷键参考：https://juejin.im/entry/59b206d1f265da246a20f1b2
+热修复: TINKER RECOMMEND BLOG
+ http://blog.csdn.net/xiejc01/article/details/52735920
+    XML特殊字符：
+ 	"  ： &#34; 或 &quot; 
+         '   ： &#39; 或 &apos;
+        &  ：  &#38; 或 &amp;
+        lt(<)   ： &#60; 或 &lt;
+        gt(>)  ： &#62; 或 &gt;
+	  空格  ： &#160;
+
+--------------------------------------------------------
+//开放api
+https://www.diycode.cc/
+http://gank.io/
+
+---------------------------------------------
+空包签名
+jarsigner -verbose -keystore D:\new_trunk\ApkKey.jks -signedjar D:\test\TestSign1.apk D:\test\TestSign.apk onehome
+-------------------------------------------------------------
+
+Rxjava 依赖：
+compile 'io.reactivex:rxjava:1.2.9'
+compile 'io.reactivex:rxandroid:1.2.1'
+-----------------------------------------------------------
+
+
+// dagger2 配置:
+ 1. propject.gradle
+
+ dependencies {
+     ... // 其他classpath
+     classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8' //添加apt命令
+ }
+
+ 2.moudel.gradle
+
+// 添加其他插件
+apply plugin: 'com.neenbedankt.android-apt'//添加apt命令
+
+dependencies {
+    apt 'com.google.dagger:dagger-compiler:2.0.2' //指定注解处理器
+    compile 'com.google.dagger:dagger:2.0.2'  //dagger公用api
+    provided 'org.glassfish:javax.annotation:10.0-b28'  //添加android缺失的部分javax注解
+}
+
+-------------------------------------------------------------------------------
+
+
+
+
+sudo vi ~/.bash_profile//配置Mac的环境变量
+
+adb shell -p me.onehome.app -v 100 //adb  指定包名monkey测试
+adb shell settings put global policy_control immersive.full=*   //打开全屏
+adb shell settings put global policy_control null   //恢复
+
+adb  shell monkey --pct-touch 90 --pct-majornav 10 -p me.onehome.app --throttle 100 -s 500 --ignore-crashes --ignore-timeouts --monitor-native-crashes -v -v 1000 > /Users/yijiaminsu/Desktop/beifen/monkeylog.txt
+
+
+
+----------------------------------------------------------
+
+
+
+
+chmod 755 android/gradlew //修改权限
+keytool -list -v -keystore E:\签名文件\android.keystore    //获取签名的sha1
+
+----------------------------------------------------------
+React native 
+//打包
+$ mkdir -p android/app/src/main/assets
+$ react-native bundle --platform android --dev false --entry-file index.android.js \
+  --bundle-output android/app/src/main/assets/index.android.bundle \
+  --assets-dest android/app/src/main/res/
+$ cd android && ./gradlew assembleRelease
+$ cd android && ./gradlew assembleDebug
+
+//react-native-tab-navigator
+npm install react-native-tab-navigator –save
+---------------------------------------------------------------------
+//获取指定应用的堆栈信息
+adb shell dumpsys activity | grep com.xxx.xxx.xx
+
+------------------------------------------------------------------------
+//Git：
+git checkout -b 本地分支名x origin/远程分支名x  //采用此种方法建立的本地分支会和远程分支建立映射关系。
+git branch --set-upstream-to=origin/<branch> localbranch   本地分支与远程分支建立映射关系
+git push origin local_branch:remote_branch   //将本地分支推到远程分支
+git checkout -b branch2_based_on_b1 branch1 //基于branch1分支创建子分支
+git branch --set-upstream-to=origin/combination_onetrip combination_onetrip 
+
+------------------------------------------------------------
+
+sh d2j-dex2jar.sh classes.dex
+
+-------------------------------------------------------
+open ~/.bash_profile
+source ~/.bash_profile
+------------------------------------------------------
+keytool -exportcert -alias Onetrip -keystore /Users/yijiaminsu/RN/onetrip/OneTrip/android/app/onetrip.jks | openssl sha1 -binary | openssl base64
